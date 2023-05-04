@@ -1,12 +1,12 @@
 import torch
 import torch.nn as nn
 from language import *
-import lightning as lt
+import pytorch_lightning as plt
 
 '''
     Class for the Encoder Network
 '''
-class EncoderNet(lt.LightningModule):
+class EncoderNet(plt.LightningModule):
     def __init__(self, vocab_size, embed_size, num_layers, hid_size, cell_type, 
                  bidirect=False, dropout=0):
         '''
@@ -96,7 +96,7 @@ class EncoderNet(lt.LightningModule):
 '''
     Class for Attention
 '''
-class Attention(lt.LightningModule):
+class Attention(plt.LightningModule):
     def __init__(self, hidden_dim, bidirect = False):
         super(Attention, self).__init__()
         self.hidden_dim = hidden_dim
@@ -122,7 +122,7 @@ class Attention(lt.LightningModule):
         # tanh_output shape = (batch_size, max_seq_len, hidden_size)
         attn_weights = self.V(tanh_output).squeeze(2)
         # attn_weights shape = (batch_size, max_seq_len)
-        attn_weights = torch.masked_fill(attn_weights, mask==1, -1e12)
+        attn_weights = torch.masked_fill(attn_weights, mask==1, -3e4)
         # fill pad locations with very small values to be zeroed by softmax
         attn_weights = self.softmaxlayer(attn_weights)
         # convert weights to probabilities over max_seq_length dimension
@@ -131,7 +131,7 @@ class Attention(lt.LightningModule):
 '''
     Class for the Decoder Network
 '''
-class DecoderNet(lt.LightningModule):
+class DecoderNet(plt.LightningModule):
     def __init__(self, vocab_size, embed_size, num_layers, hid_size, cell_type, 
                  attention=False, attn_layer=None, enc_bidirect=False, dropout=0):
         super(DecoderNet, self).__init__()
@@ -225,7 +225,7 @@ class DecoderNet(lt.LightningModule):
 ''' 
     Class for encapsulating the encoder and decoder networks
 '''
-class EncoderDecoder(lt.LightningModule):
+class EncoderDecoder(plt.LightningModule):
     def __init__(self, encoder :EncoderNet, decoder : DecoderNet, src_lang : Language, tar_lang : Language) -> None:
         super(EncoderDecoder, self).__init__()
         # store the encoder and decoder along with language objects in the class
