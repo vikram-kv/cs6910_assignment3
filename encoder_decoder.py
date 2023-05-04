@@ -1,12 +1,12 @@
 import torch
 import torch.nn as nn
 from language import *
-import pytorch_lightning as plt
+import lightning as lt
 
 '''
     Class for the Encoder Network
 '''
-class EncoderNet(plt.LightningModule):
+class EncoderNet(lt.LightningModule):
     def __init__(self, vocab_size, embed_size, num_layers, hid_size, cell_type, 
                  bidirect=False, dropout=0):
         '''
@@ -96,7 +96,7 @@ class EncoderNet(plt.LightningModule):
 '''
     Class for Attention
 '''
-class Attention(plt.LightningModule):
+class Attention(lt.LightningModule):
     def __init__(self, hidden_dim, bidirect = False):
         super(Attention, self).__init__()
         self.hidden_dim = hidden_dim
@@ -131,7 +131,7 @@ class Attention(plt.LightningModule):
 '''
     Class for the Decoder Network
 '''
-class DecoderNet(plt.LightningModule):
+class DecoderNet(lt.LightningModule):
     def __init__(self, vocab_size, embed_size, num_layers, hid_size, cell_type, 
                  attention=False, attn_layer=None, enc_bidirect=False, dropout=0):
         super(DecoderNet, self).__init__()
@@ -225,7 +225,7 @@ class DecoderNet(plt.LightningModule):
 ''' 
     Class for encapsulating the encoder and decoder networks
 '''
-class EncoderDecoder(plt.LightningModule):
+class EncoderDecoder(lt.LightningModule):
     def __init__(self, encoder :EncoderNet, decoder : DecoderNet, src_lang : Language, tar_lang : Language) -> None:
         super(EncoderDecoder, self).__init__()
         # store the encoder and decoder along with language objects in the class
@@ -304,7 +304,7 @@ class EncoderDecoder(plt.LightningModule):
             max_dec_length -> length beyond which decoding is stopped
         '''
         # convert X should be a batch with size 1
-        _, final_enc_hidden_state = self.enc_model(X, X_lens)
+        enc_outputs, final_enc_hidden_state = self.enc_model(X, X_lens)
         # recall final_enc_hidden_state -> shape (num_layers, batch_size, hidden_size)
         
         # outlogits -> tensor for storing the output logits (softmax to get post prob.)
@@ -316,6 +316,13 @@ class EncoderDecoder(plt.LightningModule):
         # get initial input for decoder -> SOS tokens with shape (batch_size)
         decoder_state = final_enc_hidden_state # initially decoder hidden state = final_enc_hidden_state
 
+        if self.attention:
+            # create a tensor for storing the attention weights. Needed for 
+            # plotting heatmaps
+            attn_matrix = torch.zeros(max_dec_length, X.size(1)).to(self.device)
+        else:
+            attn_matrix = None
+        
         if (self.cell_type == 'LSTM'):
             # for LSTM, cell state is initialized to zero and is added to decoder state
             init_dec_cell_state = torch.zeros_like(decoder_state).to(self.device)
@@ -323,8 +330,13 @@ class EncoderDecoder(plt.LightningModule):
 
         # for each timestep
         for tstep in range(1, max_dec_length):
-            # send the dec_input through the decoder.
-            curlogits, decoder_state, _ = self.dec_model(dec_input, decoder_state)
+            # send the dec_input through the decoder. we ignore the attn_weights here.
+            if self.attention:
+                pad_mask = self.make_mask(X)
+                curlogits, decoder_state, cur_attn_weights = self.dec_model(dec_input, decoder_state, enc_outputs, pad_mask)
+                cur_attn_weights.squeeze(0); attn_matrix[tstep, :] = cur_attn_weights
+            else:
+                curlogits, decoder_state, _ = self.dec_model(dec_input, decoder_state)
             # recall curlogits -> shape (batch_size, out_vocab_size); decoder_state -> shape invariant.
             # pred -> argmax along vocab_size (dim = 1) to get class labels. shape = (batch_size)
             pred = torch.argmax(curlogits, dim=1).to(self.device)
@@ -336,4 +348,4 @@ class EncoderDecoder(plt.LightningModule):
 
         # generate predicted words using preds tensor and return it.
         pred_words = self.tar_lang.convert_to_words(preds.unsqueeze(0).cpu().numpy())
-        return outlogits, pred_words
+        return outlogits, pred_words, attn_matrix

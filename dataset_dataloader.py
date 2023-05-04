@@ -1,4 +1,5 @@
 from torch.utils.data import DataLoader, Dataset
+import torch.nn as nn
 from language import *
 
 # A Dataset class to help with creating the dataset. Converts the data into numbers

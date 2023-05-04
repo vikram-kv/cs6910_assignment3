@@ -1,12 +1,4 @@
 import torch
-import torch.nn as nn
-from torch import optim
-from tqdm import tqdm
-import wandb
-import numpy as np
-from torch.utils.data import DataLoader, Dataset
-import pandas as pd
-import random
 
 # define the special tokens that stand for start of seq, end of seq, 
 # an unknown symbol.
