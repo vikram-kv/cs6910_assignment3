@@ -8,8 +8,11 @@ UNK_SYM = '!'
 PAD_SYM = '%' # define a special token for padding - this helps with batch processing 
 
 # function to load the 'cat' (= train/val/test) data of language 'lang'
-def load_data(lang, cat):
-    fcontents = open(f'aksharantar_sampled/{lang}/{lang}_{cat}.csv','r', encoding='utf-8').readlines()
+def load_data(lang, cat, pref=None):
+    if pref == None:
+        fcontents = open(f'aksharantar_sampled/{lang}/{lang}_{cat}.csv','r', encoding='utf-8').readlines()
+    else:
+        fcontents = open(pref+f'aksharantar_sampled/{lang}/{lang}_{cat}.csv','r', encoding='utf-8').readlines()
     pairs = [tuple(l.strip().split(',')) for l in fcontents]
     x_data, y_data = list(map(list,zip(*pairs)))
     return x_data, y_data
