@@ -1,3 +1,5 @@
+# Contains the definitions of a pytorch class for the dataset and also
+# the collation function to be used for postprocessing a batch in the dataloader.
 from torch.utils.data import DataLoader, Dataset
 import torch.nn as nn
 from language import *

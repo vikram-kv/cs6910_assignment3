@@ -1,0 +1,18 @@
+    # here, we will save all the predictions made and also, return a copy of the list of attention
+    # matrices for generating heatmaps
+    def get_test_results(self, fname='pred'):
+        edit_distances = [edit_dist(pred,tar) for pred, tar in zip(self.pred_test_words,self.true_test_words)]
+        pred_df = pd.DataFrame(zip(self.test_X_words, self.true_test_words, self.pred_test_words, edit_distances),
+                               columns=['Input', 'Target', 'Predicted', 'Levenshtein Distance'])
+        pred_df.to_csv('./'+fname+'.csv', index=False, encoding='utf-8')
+
+        # if attention layer is present, we return attention matrices as well.
+        ret_info = None
+        if self.attention:
+            ret_info = (self.test_X_words.copy(), self.true_test_words.copy(), self.pred_test_words.copy(), self.attn_matrices.copy())
+        self.save_test_preds = False
+
+        # clear after saving to save memory 
+        self.pred_test_words.clear(); self.true_test_words.clear(); self.test_X_words.clear()
+        self.attn_matrices.clear()
+        return ret_info

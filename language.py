@@ -1,3 +1,5 @@
+# file with the functions to i) load the data and ii) definition of a Language class
+# that has member methods to generate index2sym and sym2index mappings. 
 import torch
 
 # define the special tokens that stand for start of seq, end of seq, 
@@ -8,6 +10,8 @@ UNK_SYM = '!'
 PAD_SYM = '%' # define a special token for padding - this helps with batch processing 
 
 # function to load the 'cat' (= train/val/test) data of language 'lang'
+# 'pref' is optional - if it is used, we just add it to the front of the file path.
+# 'pref' was needed to load datasets on kaggle as datasets are not loaded into working directory
 def load_data(lang, cat, pref=None):
     if pref == None:
         fcontents = open(f'aksharantar_sampled/{lang}/{lang}_{cat}.csv','r', encoding='utf-8').readlines()

@@ -1,3 +1,5 @@
+# file with the classes defining the sub-modules for attention, encoder, decoder and
+# the seq2seq model
 import torch
 import torch.nn as nn
 from language import *
@@ -285,7 +287,7 @@ class EncoderDecoder(lt.LightningModule):
             # pred -> argmax along vocab_size (dim = 1) to get class labels. shape = (batch_size)
             pred = torch.argmax(curlogits, dim=1).to(self.device)
             # greedy dec input is whatever set of words was predicted previously. shape = (batch_size)
-            dec_input = pred
+            dec_input = pred 
             # change dec input to tf input with prob = tf_ratio
             if tf_ratio != None and torch.rand(1)[0] < tf_ratio:
                 dec_input = tf_input
