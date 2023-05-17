@@ -11,4 +11,4 @@ runner.py -> CHECKED
 download best model .ckpts from wandb and log report stuff on best_*.ipynb notebooks
 mention non-determinism of RNN models
 main.py -> update best hyperparameters after testing
-finish requirements.txt and readme.md
+finish colab_extra_requirements.txt and readme.md

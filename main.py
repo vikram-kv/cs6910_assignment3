@@ -1,6 +1,6 @@
 # The main file of the folder. Contains code to load data, create the model with the given hyperparameters
 # train the model and finally, display the metrics of the model on test data. Also, the best model (the model with the highest 
-# validation accuracy) is saved in the working folder (name = "model.ckpt"). Finally, the predictions on the test data are saved in
+# validation accuracy) is saved in a new subfolder (name = "checkpoints/model.ckpt"). Finally, the predictions on the test data are saved in
 # "predictions.csv".  We also use early stopping with patience of 5 here. A few other hyperparameters like max_epochs 
 # and min_epochs are also fixed. These hyperparameters are hardcoded but are easy to change.
 # Also, no wandb logging is done here. See code in sweep_agent where logging is done. Also, default values for the hyperparameters
@@ -15,6 +15,7 @@ from encoder_decoder import *
 from plotting_code_and_helpers import *
 from runner import Runner
 import argparse as ap
+import os, shutil
 
 # we will ignore num_workers suggestions/warnings from pytorch-lightning
 import warnings
@@ -113,7 +114,10 @@ if __name__ == '__main__':
                 batch_size=args['batch_size'] 
     )
 
-
+    # create a new checkpoints folder in working directory
+    if os.path.exists('./checkpoints/'):
+        shutil.rmtree('./checkpoints/')
+    os.mkdir('./checkpoints/')
 
     #### TRAINING SECTION ####
 
@@ -122,17 +126,16 @@ if __name__ == '__main__':
     # early stop if val_acc does not improve by min_delta for patience many epochs
     early_stop_callback = EarlyStopping(monitor="val_acc", min_delta=args['min_delta_imp'], patience=args['patience'], verbose=True, mode="max")
     # we checkpoint the model when val_acc improves in the working directory.
-    chkCallback = ModelCheckpoint(dirpath='./', filename=f'model', monitor='val_acc', mode='max')
+    chkCallback = ModelCheckpoint(dirpath='./checkpoints/', filename=f'model', monitor='val_acc', mode='max')
     trainer = lt.Trainer(min_epochs=args['min_epochs'], max_epochs=args['max_epochs'], callbacks=[chkCallback, early_stop_callback])
     # train the model using pytorch lightning
     trainer.fit(runner)
 
 
-
     #### TESTING SECTION ####
     
     # load the best model (saved locally in 'model.ckpt')
-    runner = Runner.load_from_checkpoint('./model.ckpt', **rdict)
+    runner = Runner.load_from_checkpoint('./checkpoints/model.ckpt', **rdict)
     trainer.test(runner)
 
     # get the test results and unpack it (acc. to presence of attention layer)
