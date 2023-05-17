@@ -1,8 +1,8 @@
 # The main file of the folder. Contains code to load data, create the model with the given hyperparameters
 # train the model and finally, display the metrics of the model on test data. Also, the best model (the model with the highest 
-# validation accuracy) is saved in a new subfolder (name = "checkpoints/model.ckpt"). Finally, the predictions on the test data are saved in
-# "predictions.csv".  We also use early stopping with patience of 5 here. A few other hyperparameters like max_epochs 
-# and min_epochs are also fixed. These hyperparameters are hardcoded but are easy to change.
+# validation accuracy) is saved in a new subfolder (name = "checkpoints/model.ckpt"). Finally, the predictions on the test data 
+# are saved in "./predictions.csv". We also use early stopping with adjustible patience (a hyperparameter) here. A few other 
+# hyperparameters like max_epochs and min_epochs are also used.
 # Also, no wandb logging is done here. See code in sweep_agent where logging is done. Also, default values for the hyperparameters
 # are those of the best model from the wandb sweeps.
 import lightning as lt
