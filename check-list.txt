@@ -1,8 +1,14 @@
 sweep_agent.ipynb -> CHECKED
 start_sweep.ipynb -> CHECKED
-plotting_code.py -> CHECKED
+plotting_code_and_helpers.py -> CHECKED
 language.py -> CHECKED
 bug_testing.ipynb -> CHECKED
 dataset_dataloader.py -> CHECKED
 encoder_decoder.py -> CHECKED
 runner.py -> CHECKED
+
+# pending stuff [5 files]
+download best model .ckpts from wandb and log report stuff on best_*.ipynb notebooks
+mention non-determinism of RNN models
+main.py -> update best hyperparameters after testing
+finish requirements.txt and readme.md

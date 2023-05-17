@@ -47,6 +47,7 @@ def color_code(pd_df):
             clip_edit = min(edit_distance, 4)
             colors[j][i] = colorlist[clip_edit]
     return colors
+
 '''
     pd_df is a dataframe where 1st col = X, 2nd col = y, 3rd col = y_pred1, 4th col = y_pred2 ....
     locs are the locations that we want to display.
@@ -68,3 +69,13 @@ def generate_table_and_legend(pd_df, locs):
                                 ))
     fig2 = go.Figure(data=[table])
     return fig1, fig2
+
+'''
+here, we will save all the predictions made in a local .csv file
+'''
+def save_predictions_file(src_list, tar_true_list, tar_pred_list, fname='predictions'):
+    edit_distances = [edit_dist(pred,tar) for pred, tar in zip(tar_pred_list, tar_true_list)]
+    pred_df = pd.DataFrame(zip(src_list, tar_true_list, tar_pred_list, edit_distances),
+                            columns=['Source', 'Target', 'Predicted', 'Levenshtein Distance'])
+    pred_df.to_csv('./'+fname+'.csv', index=False, encoding='utf-8')
+
