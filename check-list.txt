@@ -6,9 +6,12 @@ bug_testing.ipynb -> CHECKED
 dataset_dataloader.py -> CHECKED
 encoder_decoder.py -> CHECKED
 runner.py -> CHECKED
+best_with_attention.ipynb -> CHECKED
+best_without_attention.ipynb -> CHECKED
+main.py -> CHECKED
+
 
 # pending stuff [5 files]
-download best model .ckpts from wandb and log report stuff on best_*.ipynb notebooks
 mention non-determinism of RNN models
 main.py -> update best hyperparameters after testing
-finish colab_extra_requirements.txt and readme.md
+finish colab_extra_requirements.txt and readme.md;
