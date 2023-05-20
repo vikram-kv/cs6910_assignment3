@@ -20,10 +20,10 @@ Third Assignment of the Deep Learning Course (CS6910), Summer 2023. Task is to p
 5. **sweep_agent.ipynb** - Code to start a new sweep agent to run sweep configurations received from the wandb sweep server. Necessary to provide a sweep_id for this purpose. The agent will test 10 combinations (changeable - we use 10 to avoid overshooting execution time limits on kaggle). Early stopping and wandb model logging is also done. Also, by default, source language is ENGLISH and target language is TAMIL. This is changeable.
 
 ## Main Code File  
-**main.py** - A python script that parses its commandline arguments into hyperparameters, generates a model, trains the model with early stopping + checkpointing, runs inference on test data, displays test metrics and save all test predictions in a new local file './predictions.csv'.
+**main.py** - A python script that parses its commandline arguments into hyperparameters, generates a model, trains the model with early stopping + checkpointing, runs inference on test data, displays test metrics and saves all test predictions in a new local file './predictions.csv'.
 
 ## Requirements
-**colab_extra_requirements.txt** - Contains the extra libraries needed by the code to run on colab. To run locally, these libraries should be installed and in case of any import errors, the missing libraries should be installed. No other library than lightning, wandb, plotly, pytorch and standard libraries like numpy, pandas and argparse is used.
+**colab_extra_requirements.txt** - Contains the extra libraries needed by the code to run on colab. To run locally, these libraries should be installed and in case of any import errors, the missing libraries should be installed. No special library other than lightning, wandb, plotly, pytorch and standard libraries like numpy, pandas and argparse is used.
 
 ## Directories
 1. **aksharantar_sampled** - Contains the [subset of aksharantar dataset](https://drive.google.com/file/d/1uRKU4as2NlS9i8sdLRS1e326vQRdhvfw/view) used for this assignment.
