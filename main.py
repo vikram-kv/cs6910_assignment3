@@ -26,7 +26,7 @@ warnings.filterwarnings("ignore")
 # NOTE - change the default values to that of the best model
 def gen_parser():
     parser = ap.ArgumentParser(description='Recurrent network based encoder-decoder model for transliteration task. Ensure that "aksharantar_sampled" is present in this directory as downloaded without any change.')
-    parser.add_argument('-src', '--source', dest='source', default='eng', help='source language (english) sub-folder name.')
+    parser.add_argument('-src', '--source', dest='source', default='eng', choices=['eng'], help='source language (english) sub-folder name.')
     parser.add_argument('-tar', '--target', dest='target', default='tam', help='target language sub-folder name.')
     parser.add_argument('-em', '--embedding_size', dest='embedding_size', default=192, type=int, help='common embedding size of encoder and decoder')
     parser.add_argument('-nl', '--number_of_layers', dest='number_of_layers', default=1, type=int, help='common number of layers in encoder and decoder')

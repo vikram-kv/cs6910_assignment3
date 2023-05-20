@@ -79,9 +79,9 @@ class Runner(lt.LightningModule):
         self.train_losses = []
         self.valid_losses = []
 
-        # dictionary for logging at end of val epoch
+        # dictionary for logging at end of val epoch - to save model weights on wandb
         self.wdb_logged_metrics = dict()
-        self.best_val_acc_seen = -0.01 # to save model weights on wandb
+        self.best_val_acc_seen = -0.01 
 
     def configure_optimizers(self):
         optimizer = None

@@ -8,9 +8,9 @@ encoder_decoder.py -> CHECKED
 runner.py -> CHECKED
 best_with_attention.ipynb -> CHECKED
 best_without_attention.ipynb -> CHECKED
-main.py -> CHECKED [52.63 - test; 63.6 - val on local system] [test args pending]
-
+main.py -> CHECKED [52.63 - test; 63.6 - val on local system] [test colab pending]
+req.txt -> CHECKED
+readme -> CHECKED
 
 # pending stuff [5 files]
 mention non-determinism of RNN models
-finish colab_extra_requirements.txt and readme.md;
