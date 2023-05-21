@@ -44,7 +44,7 @@ The default hyperparameter values are those of the best model for tamil data. Th
 ```bash
 python3 main.py
 ```
-
+The above command will train a model with the specified architecture, also test the model on test data and save the predictions made locally in './predictions.csv'.
 The complete set of commandline arguments supported are
 
 ```bash
