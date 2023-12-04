@@ -1,5 +1,5 @@
-# CS6910 Assignment 3
-Third Assignment of the Deep Learning Course (CS6910), Summer 2023. Task is to perform Transliteration on a sampled subset of [aksharantar dataset](https://drive.google.com/file/d/1uRKU4as2NlS9i8sdLRS1e326vQRdhvfw/view) using recurrent neural network based seq2seq models. [Lightning](https://github.com/Lightning-AI/lightning) (previously called pytorch-lightning) has been used for this assignment. It provides tensorboard support and contains library callback methods for custom checkpointing and early stopping. Most importantly, it eliminates boilerplate code.
+# CS6910 Project 2
+Second Project of the Deep Learning Course (CS6910), Summer 2023. Task is to perform Transliteration on a sampled subset of [aksharantar dataset](https://drive.google.com/file/d/1uRKU4as2NlS9i8sdLRS1e326vQRdhvfw/view) using recurrent neural network based seq2seq models. [Lightning](https://github.com/Lightning-AI/lightning) (previously called pytorch-lightning) has been used for this project. It provides tensorboard support and contains library callback methods for custom checkpointing and early stopping. Most importantly, it eliminates boilerplate code.
 
 **Wandb Report** : [link](https://wandb.ai/cs19b021/cs6910-assignment3/reports/CS6910-DL-Assignment-3--Vmlldzo0MTY1NjU3)
 
@@ -26,7 +26,7 @@ Third Assignment of the Deep Learning Course (CS6910), Summer 2023. Task is to p
 **colab_extra_requirements.txt** - Contains the extra libraries needed by the code to run on colab. To run locally, these libraries should be installed and in case of any import errors, the missing libraries should be installed. No special library other than lightning, wandb, plotly, pytorch and standard libraries like numpy, pandas and argparse is used.
 
 ## Directories
-1. **aksharantar_sampled** - Contains the [subset of aksharantar dataset](https://drive.google.com/file/d/1uRKU4as2NlS9i8sdLRS1e326vQRdhvfw/view) used for this assignment.
+1. **aksharantar_sampled** - Contains the [subset of aksharantar dataset](https://drive.google.com/file/d/1uRKU4as2NlS9i8sdLRS1e326vQRdhvfw/view) used for this project.
 2. **best_checkpoints** - Contains subfolders that have the checkpoint artifacts logged by the best runs from the **attention sweep** and **no attention sweep**. The .ckpt files are properly named to indicate the hyperparameter combination used by the corresponding runs that generated them.
 3. **predictions_vanilla** - Contains the predictions made by the best model **without any attention mechanism.**
 4. **predictions_attention** - Contains the predictions made by the best model **with attention mechanism.**
